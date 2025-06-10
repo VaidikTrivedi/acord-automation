@@ -86,8 +86,45 @@ def create_final_dict(csv_dict):
         "CC_FTE_1": csv_dict["Location1Wc1NumberOfFullTimeEmployees"],
         "CC_Payroll_1": csv_dict["Location1Wc1NumberOfFullTimeEmployees"],
         "SIC": csv_dict["Location1ClassOfBusiness"],
-        "CC_State_1": csv_dict["Location1State"],
-        
+        "CC_State_1": "dummy location", # TODO: Not in CSV, using dummy value
+        "CC_State_2": "dummy location", # TODO: Not in CSV, using dummy value
+        "CC_State_3": "dummy location", # TODO: Not in CSV, using dummy value
+        "CC_State_4": "dummy location", # TODO: Not in CSV, using dummy value
+        "CC_Loc_1": csv_dict["Location1Address"],
+        "CC_Loc_2": csv_dict["Location2Address"],
+        "CC_Loc_3": csv_dict["Location3Address"],
+        "CC_Loc_4": csv_dict["Location4Address"],
+        "CC_1": csv_dict["Location1Wc1NumberOfFullTimeEmployees"],
+        "CC_2": csv_dict["Location2Wc1NumberOfFullTimeEmployees"],
+        "CC_3": csv_dict["Location3Wc1NumberOfFullTimeEmployees"],
+        "CC_4": csv_dict["Location4Wc1NumberOfFullTimeEmployees"],
+        "CC_Desc_Code_1": csv_dict["Location1ClassOfBusiness"],
+        "CC_Desc_Code_2": csv_dict["Location2ClassOfBusiness"],
+        "CC_Desc_Code_3": csv_dict["Location3ClassOfBusiness"],
+        "CC_Desc_Code_4": csv_dict["Location4ClassOfBusiness"],
+        "CC_Desc_1" : csv_dict["Location1ClassOfBusiness"], # TODO: Check if this is correct
+        "CC_Desc_2" : csv_dict["Location2ClassOfBusiness"],
+        "CC_Desc_3" : csv_dict["Location3ClassOfBusiness"],
+        "CC_Desc_4" : csv_dict["Location4ClassOfBusiness"],
+        "CC_FTE_1" : "dummy data", #TODO: Not in CSV, using dummy value
+        "CC_FTE_2" : "dummy data", #TODO: Not in CSV, using dummy value
+        "CC_FTE_3" : "dummy data", #TODO: Not in CSV, using dummy value
+        "CC_FTE_4" : "dummy data", #TODO: Not in CSV, using dummy value
+        "CC_PTE_1": "dummy data", #TODO: Not in CSV, using dummy value
+        "CC_PTE_2": "dummy data", #TODO: Not in CSV, using dummy value
+        "CC_PTE_3": "dummy data", #TODO: Not in CSV, using dummy value
+        "CC_PTE_4": "dummy data", #TODO: Not in CSV, using dummy value
+        "CC_Payroll_1": csv_dict["Owner1Payroll"],
+        "CC_Payroll_2": csv_dict["Owner2Payroll"],
+        "CC_Payroll_3": csv_dict["Owner3Payroll"],
+        "CC_Payroll_4": csv_dict["Owner4Payroll"],
+#rate field is missing
+        "CC_Prem_1" : csv_dict["CurrentTermPremium"],
+        "CC_Prem_2" : csv_dict["Prior1TermPremium"],
+        "CC_Prem_3" : csv_dict["Prior2TermPremium"],
+        "CC_Prem_4" : csv_dict["Prior3TermPremium"],
+
+
 
 
         
