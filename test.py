@@ -86,6 +86,8 @@ def create_final_dict(csv_dict):
         "CC_FTE_1": csv_dict["Location1Wc1NumberOfFullTimeEmployees"],
         "CC_Payroll_1": csv_dict["Location1Wc1NumberOfFullTimeEmployees"],
         "SIC": csv_dict["Location1ClassOfBusiness"],
+        "CC_State_1": csv_dict["Location1State"],
+        
 
 
         
