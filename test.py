@@ -19,6 +19,8 @@ def fill_pdf_fields(input_pdf_path, output_pdf_path, data_dict):
     #     data_dict
     # )
 
+    print("Filling fields with data:")
+
     writer.add_js("this.getField('Applicant Name').defaultValue = this.getField('Applicant Name').value;")
     writer.add_metadata(reader.metadata)
 
