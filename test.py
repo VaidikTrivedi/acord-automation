@@ -117,12 +117,11 @@ def fill_overlay_text(input_pdf, output_pdf, data_dict):
     page.insert_text((405, 304), "4", color=color)
     page.insert_text((405, 327), "0", color=color)
 
+    page.insert_text((27, 370), "New and remodel work. only commercial. ", color=color)
+
+    page.insert_text((380, 565), data_dict["InspectionContactPhone"], color=color)
+    page.insert_text((380, 575), data_dict ["InspectionContactFirstName"] + " " + data_dict["InspectionContactLastName"], color=color)
     
-
-
-
-
-
 
 
 
@@ -189,6 +188,9 @@ def create_final_dict(csv_dict):
         "CC_Prem_2" : csv_dict["Prior1TermPremium"],
         "CC_Prem_3" : csv_dict["Prior2TermPremium"],
         "CC_Prem_4" : csv_dict["Prior3TermPremium"],
+        "InspectionContactPhone": csv_dict["InspectionContactPhone"],
+        "InspectionContactFirstName": csv_dict["InspectionContactFirstName"],
+        "InspectionContactLastName": csv_dict["InspectionContactLastName"],
 
 
 
