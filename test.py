@@ -62,6 +62,72 @@ def fill_overlay_text(input_pdf, output_pdf, data_dict):
     # page.insert_text((23, 214), "X", color=color) 
     page.insert_text((212, 226), "X", color=color)
     page.insert_text((293, 154), data_dict["SIC"], color=color)  
+
+    page = doc[1]
+    page.insert_text((21, 75), "1", color=color)
+    page.insert_text((33, 75), data_dict["Applicant"], color=color)
+    page.insert_text((21, 100), "2", color=color)
+    page.insert_text((33, 100), data_dict["Applicant"], color=color)
+    page.insert_text((21, 125), "3", color=color)
+    page.insert_text((33, 125), data_dict["Applicant"], color=color)
+    page.insert_text((21, 150), "4", color=color)
+    page.insert_text((33, 150), data_dict["Applicant"], color=color)
+    page.insert_text((21, 175), "5", color=color)
+    page.insert_text((33, 173), data_dict["Applicant"], color=color)
+
+    page.insert_text((170, 75), "dd/mm/yyyy", color=color)
+    page.insert_text((170, 100), "dd/mm/yyyy", color=color)
+    page.insert_text((170, 125), "dd/mm/yyyy", color=color) 
+    page.insert_text((170, 147), "dd/mm/yyyy", color=color)
+    page.insert_text((170, 173), "dd/mm/yyyy", color=color)
+
+    page.insert_text((235, 75), "president", color=color)
+    page.insert_text((235, 100), "president", color=color)
+    page.insert_text((235, 125), "president", color=color)
+    page.insert_text((235, 147), "president", color=color)
+    page.insert_text((235, 173), "president", color=color)
+
+    page.insert_text((292, 75), "100", color=color)
+    page.insert_text((292, 100), "100", color=color)
+    page.insert_text((292, 125), "100", color=color)
+    page.insert_text((292, 147), "100", color=color)
+    page.insert_text((292, 173), "100", color=color)
+
+    page.insert_text((442, 75), "EXC", color=color)
+    page.insert_text((442, 100), "EXC", color=color)
+    page.insert_text((442, 125), "EXC", color=color)
+    page.insert_text((442, 147), "EXC", color=color)
+    page.insert_text((442, 173), "EXC", color=color)
+
+    page.insert_text((80, 227), "Everest", color=color)
+    page.insert_text((80, 250), "Everest", color=color)
+    page.insert_text((80, 274), "HDI Global Ins", color=color)
+    page.insert_text((80, 299), "Everest", color=color)
+    page.insert_text((80, 322), "Everest", color=color)
+
+    page.insert_text((80, 239), "7600014668", color=color)
+    page.insert_text((80, 263), "7600014668", color=color)
+    page.insert_text((80, 287), "EWGCC000130414", color=color)
+    page.insert_text((80, 312), "7600009239", color=color)
+    page.insert_text((80, 335), "7600009239", color=color)
+
+    page.insert_text((405, 232), "1", color=color)
+    page.insert_text((405, 256), "2", color=color)
+    page.insert_text((405, 280), "2", color=color)
+    page.insert_text((405, 304), "4", color=color)
+    page.insert_text((405, 327), "0", color=color)
+
+    
+
+
+
+
+
+
+
+
+
+
     doc.save(output_pdf)
 
 def create_final_dict(csv_dict):
@@ -123,6 +189,7 @@ def create_final_dict(csv_dict):
         "CC_Prem_2" : csv_dict["Prior1TermPremium"],
         "CC_Prem_3" : csv_dict["Prior2TermPremium"],
         "CC_Prem_4" : csv_dict["Prior3TermPremium"],
+
 
 
 
