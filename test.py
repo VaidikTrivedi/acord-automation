@@ -14,10 +14,6 @@ def fill_pdf_fields(input_pdf_path, output_pdf_path, data_dict):
     writer.append(reader)
     for page in writer.pages:
         writer.update_page_form_field_values(page, data_dict)
-    # writer.update_page_form_field_values(
-    #     writer.pages[0],  # usually the first page
-    #     data_dict
-    # )
 
     print("Filling fields with data:")
 
@@ -59,7 +55,6 @@ def fill_overlay_text(input_pdf, output_pdf, data_dict):
     doc = fitz.open(input_pdf)
     page = doc[0]
     page.insert_text((112, 58), data_dict["Phone"], color=color) 
-    # page.insert_text((23, 214), "X", color=color) 
     page.insert_text((212, 226), "X", color=color)
     page.insert_text((293, 154), data_dict["SIC"], color=color)  
 
@@ -74,59 +69,47 @@ def fill_overlay_text(input_pdf, output_pdf, data_dict):
     page.insert_text((33, 150), data_dict["Applicant"], color=color)
     page.insert_text((21, 175), "5", color=color)
     page.insert_text((33, 173), data_dict["Applicant"], color=color)
+    page.insert_text((170, 75), "dd/mm/yyyy", color=color) #TODO: Replace with actual date
+    page.insert_text((170, 100), "dd/mm/yyyy", color=color) #TODO: Replace with actual date
+    page.insert_text((170, 125), "dd/mm/yyyy", color=color) #TODO: Replace with actual date
+    page.insert_text((170, 147), "dd/mm/yyyy", color=color) #TODO: Replace with actual date
+    page.insert_text((170, 173), "dd/mm/yyyy", color=color) #TODO: Replace with actual date
 
-    page.insert_text((170, 75), "dd/mm/yyyy", color=color)
-    page.insert_text((170, 100), "dd/mm/yyyy", color=color)
-    page.insert_text((170, 125), "dd/mm/yyyy", color=color) 
-    page.insert_text((170, 147), "dd/mm/yyyy", color=color)
-    page.insert_text((170, 173), "dd/mm/yyyy", color=color)
-
+    # TODO: Update title based on BusinessOwnershipStructure from CSV
     page.insert_text((235, 75), "president", color=color)
     page.insert_text((235, 100), "president", color=color)
     page.insert_text((235, 125), "president", color=color)
     page.insert_text((235, 147), "president", color=color)
     page.insert_text((235, 173), "president", color=color)
-
-    page.insert_text((292, 75), "100", color=color)
+    page.insert_text((292, 75), "100", color=color) #TODO: Owner1Ownership
     page.insert_text((292, 100), "100", color=color)
     page.insert_text((292, 125), "100", color=color)
     page.insert_text((292, 147), "100", color=color)
     page.insert_text((292, 173), "100", color=color)
-
-    page.insert_text((442, 75), "EXC", color=color)
+    page.insert_text((442, 75), "EXC", color=color) # TODO: Owner1WantToInclude
     page.insert_text((442, 100), "EXC", color=color)
     page.insert_text((442, 125), "EXC", color=color)
     page.insert_text((442, 147), "EXC", color=color)
     page.insert_text((442, 173), "EXC", color=color)
-
-    page.insert_text((80, 227), "Everest", color=color)
-    page.insert_text((80, 250), "Everest", color=color)
+    page.insert_text((80, 227), "Everest", color=color)  #TODO: CurrentTermCarrier
+    page.insert_text((80, 250), "Everest", color=color) 
     page.insert_text((80, 274), "HDI Global Ins", color=color)
     page.insert_text((80, 299), "Everest", color=color)
     page.insert_text((80, 322), "Everest", color=color)
-
-    page.insert_text((80, 239), "7600014668", color=color)
+    page.insert_text((80, 239), "7600014668", color=color) #TODO: CurrentTermPolicyNumber
     page.insert_text((80, 263), "7600014668", color=color)
     page.insert_text((80, 287), "EWGCC000130414", color=color)
     page.insert_text((80, 312), "7600009239", color=color)
     page.insert_text((80, 335), "7600009239", color=color)
-
-    page.insert_text((405, 232), "1", color=color)
-    page.insert_text((405, 256), "2", color=color)
+    page.insert_text((405, 232), "1", color=color) #TODO: CurrentTermClaimCount
+    page.insert_text((405, 256), "2", color=color) #TODO: Prior1TermClaimCount
     page.insert_text((405, 280), "2", color=color)
     page.insert_text((405, 304), "4", color=color)
     page.insert_text((405, 327), "0", color=color)
-
-    page.insert_text((27, 370), "New and remodel work. only commercial. ", color=color)
-
+    page.insert_text((27, 370), "New and remodel work. only commercial. ", color=color) #TODO: Location1BusinessDescription
     page.insert_text((380, 565), data_dict["InspectionContactPhone"], color=color)
     page.insert_text((380, 575), data_dict ["InspectionContactFirstName"] + " " + data_dict["InspectionContactLastName"], color=color)
     
-
-
-
-
-
     doc.save(output_pdf)
 
 def create_final_dict(csv_dict):
@@ -183,7 +166,6 @@ def create_final_dict(csv_dict):
         "CC_Payroll_2": csv_dict["Owner2Payroll"],
         "CC_Payroll_3": csv_dict["Owner3Payroll"],
         "CC_Payroll_4": csv_dict["Owner4Payroll"],
-#rate field is missing
         "CC_Prem_1" : csv_dict["CurrentTermPremium"],
         "CC_Prem_2" : csv_dict["Prior1TermPremium"],
         "CC_Prem_3" : csv_dict["Prior2TermPremium"],
@@ -191,34 +173,10 @@ def create_final_dict(csv_dict):
         "InspectionContactPhone": csv_dict["InspectionContactPhone"],
         "InspectionContactFirstName": csv_dict["InspectionContactFirstName"],
         "InspectionContactLastName": csv_dict["InspectionContactLastName"],
-
-
-
-
-
-        
-        # "Individual": csv_dict["BusinessOwnershipStructure"],
-        # "Partnership": csv_dict["BusinessOwnershipStructure"],
-        # "Corporation": csv_dict["BusinessOwnershipStructure"],
-        # 'SUBCHAPTER "S" CORP': csv_dict["BusinessOwnershipStructure"],
-        # "LLC": csv_dict["BusinessOwnershipStructure"],
-        # "Other": csv_dict["BusinessOwnershipStructure"],
-        # "Describe Other": csv_dict["BusinessOwnershipStructure"],
-        # "Quote": True, #TODO: Always checked
-        # "Agency Bill": True, # TODO: Always checked
-        # "Proposed Effective Date": csv_dict["PolicyStartDate"],
-        # "Proposed Expiration Date": "", #TODO: Add one year to PolicyStartDate
-        # "Workers Compensation - States": "CA",  
     }
     return final_dict
 
-
-
-
-
 if __name__ == "__main__":
-    # fill_from_csv("acord130_data_2.csv", "acord130_blank.pdf")
     data_dict = csv_to_dict("acord130_data_2.csv")
     final_dict = create_final_dict(data_dict)
     fill_pdf_fields("WC Acord 130 2022.pdf", "acord130_filled_final.pdf", final_dict)
-    # fill_pdf_fields("acord130_blank.pdf", "acord130_filled_final_2.pdf", final_dict)
