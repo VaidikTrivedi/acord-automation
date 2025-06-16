@@ -1,0 +1,14 @@
+{
+  "name": "acord-web-automation",
+  "version": "0.0.1",
+  "description": "Automate acord webforms on websites",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run index.js"
+  },
+  "dependencies": {
+    "playwright": "^1.44.0"
+  },
+  "author": "Vaidik Trivedi",
+  "license": "ISC"
+}

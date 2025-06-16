@@ -5,3 +5,4 @@ temp.*
 .DS_Store
 *.pdf
 pdf_automation/caconstructionclasscodesog.json
+node_modules
