@@ -2,3 +2,6 @@
 .vscode
 *.csv
 temp.*
+.DS_Store
+*.pdf
+pdf_automation/caconstructionclasscodesog.json
