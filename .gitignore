@@ -6,3 +6,8 @@ temp.*
 *.pdf
 pdf_automation/caconstructionclasscodesog.json
 node_modules
+web_automation/config.json
+jsconfig.json
+.gitignore
+form_filled.png
+error.png
