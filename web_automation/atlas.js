@@ -54,7 +54,7 @@ export class Atlas extends BaseClass {
 
     console.log('Form filling completed!');
 
-    // await dialog.locator('span:has-text("Create Application")').click()
+    await dialog.locator('span:has-text("Create Application")').click()
 
     // Keep browser open for manual verification
     await page.waitForTimeout(5000);
@@ -65,29 +65,38 @@ export class Atlas extends BaseClass {
   async fillForm(page, csvData) {
     
     // Wait for the form to load
-    await page.waitForLoadState('networkidle');
+    // await page.waitForLoadState('networkidle');
     
     // Fill Insured Mailing Address
-    await page.fill('[ref="s3e238"]', '123 Main Street'); // Street 1
-    await page.fill('[ref="s3e248"]', 'Suite 100'); // Street 2
-    await page.fill('[ref="s3e259"]', '12345'); // Zip Code
-    await page.fill('[ref="s3e272"]', 'New York'); // City
-    await page.fill('[ref="s3e280"]', 'New York County'); // County
+    await page.fill('[class="formFieldComponent-street1"]', csvData["Location1Address"]); // Street 1
+    // await page.fill('[ref="s3e248"]', 'Suite 100'); // Street 2
+    await page.fill('[class="formFieldComponent-postalCode"]', '12345'); // Zip Code TODO: fetch it from Location1Address
+    await page.fill('[class="formFieldComponent-city"]', 'New York'); // City
+    // await page.fill('[ref="s3e280"]', 'New York County'); // County
     
-    // State dropdown
-    await page.click('[ref="s3e293"]'); // State dropdown
-    // You'll need to select appropriate state option here
+    // State dropdown TODO: Fix this: document.querySelector('[class="buttonLabel ng-binding"]').innerText = "California"
+    // const dropdownSelector = '[class="formFieldComponent-street1"]'; 
+    // await page.selectOption(dropdownSelector, { label: 'California' });
     
     // Phone numbers and email
-    await page.fill('[ref="s3e305"]', '555-123-4567'); // Office Phone
-    await page.fill('[ref="s3e319"]', '555-987-6543'); // Mobile Phone
-    await page.fill('[ref="s3e327"]', 'test@example.com'); // Email
+    // await page.fill('[ref="s3e305"]', '555-123-4567'); // Office Phone
+    await page.fill('[class="formFieldComponent-mobilePhone"]', csvData["PhoneNumber"]); // Mobile Phone
+    await page.fill('[class="formFieldComponent-emailAddress"]', csvData["EmailAddress"]); // Email
     
     // Insured Information
-    await page.fill('[ref="s3e354"]', '10'); // Years in Business
+    await page.fill('[class="formFieldComponent-yearsInBusiness ui-number-without-commas-formatter"]', csvData["YearsInIndustry"]); // Years in Business
     
     // SIC Code dropdown
-    await page.click('[ref="s3e372"]'); // SIC Code dropdown
+    const selector = '[class="select2-chosen ng-binding"]';
+    const newText = '738387';
+
+    // Wait for the element to be present and then evaluate the function
+    await page.locator(selector).first().evaluate((element, text) => {
+        element.innerText = text;
+    }, newText); 
+
+    await page.waitForTimeout(1000); 
+
     
     // NAICS Code dropdown
     await page.click('[ref="s3e390"]'); // NAICS Code dropdown
@@ -96,15 +105,12 @@ export class Atlas extends BaseClass {
     await page.click('[ref="s3e413"]'); // Legal Entity dropdown
     
     // FEIN and Bureau ID
-    await page.fill('[ref="s3e428"]', '12-3456789'); // FEIN
+    await page.fill('[class="formFieldComponent-fein ng-touched"]', csvData["FEINumber"]); // FEIN
     await page.fill('[ref="s3e440"]', 'BUR123456'); // Bureau ID
-    await page.fill('[ref="s3e454"]', 'https://example.com'); // Website
+    // await page.fill('[ref="s3e454"]', 'https://example.com'); // Website
     
     // Nature of Business description
-    await page.fill('[ref="s3e499"]', 'General business operations including consulting and services');
-    
-    // DBA
-    await page.fill('[ref="s3e517"]', 'Example DBA Name');
+    await page.fill('[class="formFieldComponent-descriptionOfOperations"]', csvData["Location1BusinessDescription"]);
     
     // Additional Named Insured fields
     await page.fill('[ref="s3e571"]', 'Additional Insured Name'); // Additional Named Insured
@@ -163,7 +169,7 @@ export class Atlas extends BaseClass {
       // Alternative: try clicking anyway
       await page.click('[ref="s3e172"]');
     }
-  }  
+  } 
 
 
   async runAutomation(csvData) {
