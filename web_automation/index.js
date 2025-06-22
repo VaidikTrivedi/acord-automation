@@ -30,8 +30,15 @@ async function readCSVtoJSON(filePath) {
     const lines = data.split("\n").filter(line => line.trim() !== "");
     const csvDict = {};
     for (const line of lines) {
-        const [header, value] = line.split(",").map(v => v.trim());
+        let [header, value] = line.split(",").map(v => v.trim());
         if (header) {
+            if (header === "Location1Address") {
+                const splited = line.split(',');
+                value = splited[1].replaceAll('"', '').trim();
+                csvDict["city"] = splited[2].trim();
+                csvDict["state"] = splited[3].trim().split(" ")[0];
+                csvDict["zipCode"] = splited[3].trim().split(" ")[1].replaceAll('"', '');
+            }
             csvDict[header] = value !== undefined && value !== "" ? value : "";
         }
     }
