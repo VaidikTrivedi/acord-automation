@@ -110,7 +110,8 @@ export class Atlas extends BaseClass {
         // fill class code dropdown
         await page.locator('[class="select2-choice ui-select-match select2-default"]').click();
         const selector = '[type="search"]';
-        const newValue = "5446";
+        // const newValue = "5446";
+        const newValue = csvData["Location1Wc1Code"];
 
         // Locate the eighth element (index 7) with type="search" and fill it
         await page.locator(selector).nth(7).fill(newValue);
