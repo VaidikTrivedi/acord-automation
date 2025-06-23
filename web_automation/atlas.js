@@ -2,6 +2,10 @@ import { chromium } from 'playwright';
 import { BaseClass } from './baseClass.js';
 import { convertNumberToDate } from "./helper.js";
 
+// TODO: Add multiple classcode - Location1Wc'n'Code
+// TODO: Checkbox accord questions based on data
+// TODO: Return Submission #, Quote price, Quote Link if avaible after successful submission
+
 export class Atlas extends BaseClass {
     constructor(url, username, password) {
         super(url, username, password)
