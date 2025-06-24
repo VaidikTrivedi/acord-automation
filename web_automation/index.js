@@ -15,8 +15,8 @@ async function main() {
             const password = config.atlas.password;
             try {
                 const worker = new Atlas(url, username, password);
-                const result = await worker.runAutomation(csvData);
-                console.log(`Output: - ${JSON.stringify(result)}`);
+                const policySubmissionResult = await worker.runAutomation(csvData);
+                console.log(`Output: - ${JSON.stringify(policySubmissionResult)}`);
             } catch (error) {
                 console.error('Error in main function:', error);
             }
