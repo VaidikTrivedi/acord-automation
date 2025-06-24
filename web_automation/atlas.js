@@ -2,9 +2,7 @@ import { chromium } from 'playwright';
 import { BaseClass } from './baseClass.js';
 import { convertNumberToDate } from "./helper.js";
 
-// TODO: Add multiple classcode - Location1Wc'n'Code
 // TODO: Checkbox accord questions based on data
-// TODO: Return Submission #, Quote price, Quote Link if avaible after successful submission
 
 export class Atlas extends BaseClass {
     constructor(url, username, password) {
@@ -127,6 +125,78 @@ export class Atlas extends BaseClass {
         await page.fill('[class="formFieldComponent-numberOfPartTimeEmployees ui-number-without-commas-formatter"]', csvData["Location1Wc1NumberOfPartTimeEmployees"]);
         await page.fill('[class="formFieldComponent-estimatedAnnualRemuneration ui-currency-formatter ui-display-dollar"]', csvData["Location1Wc1NumberOfSeasonalEmployees"]);
 
+        if(csvData["Location2Wc1Code"] != "") {
+            await page.waitForTimeout(1500);
+            await page.locator('[class="btn btn-xs addNewButton ng-scope"]').nth(1).click();
+            await page.waitForTimeout(1000);
+            await page.locator('[class="formFieldComponent-locationNumberClassCode ui-number-without-commas-formatter"]').nth(1).fill("2");
+            await page.locator('[class="select2-choice ui-select-match select2-default"]').nth(0).click();
+            await page.locator('[type="search"]').nth(9).fill("CA");
+            await page.waitForTimeout(2500);
+            await page.keyboard.press("Enter");
+            await page.locator('[class="select2-choice ui-select-match select2-default""]').nth(0).click();
+            await page.locator('[type="search"]').nth(9).fill(csvData["Location2Wc1Code"]);
+            await page.waitForTimeout(2500);
+            await page.keyboard.press("Enter");
+            await page.locator('[class="formFieldComponent-numberOfFullTimeEmployees ui-number-without-commas-formatter"]').nth(1).fill(csvData["Location2Wc1NumberOfFullTimeEmployees"]);
+            await page.locator('[class="formFieldComponent-numberOfPartTimeEmployees ui-number-without-commas-formatter"]').nth(1).fill(csvData["Location2Wc1NumberOfPartTimeEmployees"]);
+            await page.locator('[class="formFieldComponent-estimatedAnnualRemuneration ui-currency-formatter ui-display-dollar"]').nth(1).fill(csvData["Location2Wc1NumberOfSeasonalEmployees"]);
+        }
+
+        if(csvData["Location3Wc1Code"] != "") {
+            await page.waitForTimeout(1500);
+            await page.locator('[class="btn btn-xs addNewButton ng-scope"]').nth(1).click();
+            await page.waitForTimeout(1000);
+            await page.locator('[class="formFieldComponent-locationNumberClassCode ui-number-without-commas-formatter"]').nth(2).fill("3");
+            await page.locator('[class="select2-choice ui-select-match select2-default"]').nth(0).click();
+            await page.locator('[type="search"]').nth(11).fill("CA");
+            await page.waitForTimeout(2500);
+            await page.keyboard.press("Enter");
+            await page.locator('[class="select2-choice ui-select-match select2-default"]').nth(0).click();
+            await page.locator('[type="search"]').nth(11).fill(csvData["Location3Wc1Code"]);
+            await page.waitForTimeout(2500);
+            await page.keyboard.press("Enter");
+            await page.locator('[class="formFieldComponent-numberOfFullTimeEmployees ui-number-without-commas-formatter"]').nth(1).fill(csvData["Location3Wc1NumberOfFullTimeEmployees"]);
+            await page.locator('[class="formFieldComponent-numberOfPartTimeEmployees ui-number-without-commas-formatter"]').nth(1).fill(csvData["Location3Wc1NumberOfPartTimeEmployees"]);
+            await page.locator('[class="formFieldComponent-estimatedAnnualRemuneration ui-currency-formatter ui-display-dollar"]').nth(1).fill(csvData["Location3Wc1NumberOfSeasonalEmployees"]);
+        }
+
+        if(csvData["Location4Wc1Code"] != "") {
+            await page.waitForTimeout(1500);
+            await page.locator('[class="btn btn-xs addNewButton ng-scope"]').nth(1).click();
+            await page.waitForTimeout(1000);
+            await page.locator('[class="formFieldComponent-locationNumberClassCode ui-number-without-commas-formatter"]').nth(3).fill("4");
+            await page.locator('[class="select2-choice ui-select-match select2-default"]').nth(0).click();
+            await page.locator('[type="search"]').nth(13).fill("CA");
+            await page.waitForTimeout(2500);
+            await page.keyboard.press("Enter");
+            await page.locator('[class="select2-choice ui-select-match select2-default"]').nth(0).click();
+            await page.locator('[type="search"]').nth(13).fill(csvData["Location4Wc1Code"]);
+            await page.waitForTimeout(2500);
+            await page.keyboard.press("Enter");
+            await page.locator('[class="formFieldComponent-numberOfFullTimeEmployees ui-number-without-commas-formatter"]').nth(1).fill(csvData["Location4Wc1NumberOfFullTimeEmployees"]);
+            await page.locator('[class="formFieldComponent-numberOfPartTimeEmployees ui-number-without-commas-formatter"]').nth(1).fill(csvData["Location4Wc1NumberOfPartTimeEmployees"]);
+            await page.locator('[class="formFieldComponent-estimatedAnnualRemuneration ui-currency-formatter ui-display-dollar"]').nth(1).fill(csvData["Location4Wc1NumberOfSeasonalEmployees"]);
+        }
+
+        if(csvData["Location5Wc1Code"] != "") {
+            await page.waitForTimeout(1500);
+            await page.locator('[class="btn btn-xs addNewButton ng-scope"]').nth(1).click();
+            await page.waitForTimeout(1000);
+            await page.locator('[class="formFieldComponent-locationNumberClassCode ui-number-without-commas-formatter"]').nth(4).fill("5");
+            await page.locator('[class="select2-choice ui-select-match select2-default"]').nth(0).click();
+            await page.locator('[type="search"]').nth(15).fill("CA");
+            await page.waitForTimeout(2500);
+            await page.keyboard.press("Enter");
+            await page.locator('[class="select2-choice ui-select-match select2-default"]').nth(0).click();
+            await page.locator('[type="search"]').nth(15).fill(csvData["Location5Wc1Code"]);
+            await page.waitForTimeout(2500);
+            await page.keyboard.press("Enter");
+            await page.locator('[class="formFieldComponent-numberOfFullTimeEmployees ui-number-without-commas-formatter"]').nth(1).fill(csvData["Location5Wc1NumberOfFullTimeEmployees"]);
+            await page.locator('[class="formFieldComponent-numberOfPartTimeEmployees ui-number-without-commas-formatter"]').nth(1).fill(csvData["Location5Wc1NumberOfPartTimeEmployees"]);
+            await page.locator('[class="formFieldComponent-estimatedAnnualRemuneration ui-currency-formatter ui-display-dollar"]').nth(1).fill(csvData["Location5Wc1NumberOfSeasonalEmployees"]);
+        }
+        
         return page;
     }
 
@@ -177,7 +247,20 @@ export class Atlas extends BaseClass {
             await page.screenshot({
                 path: `SUCCESS_${csvData["BusinessName"]}.png`,
                 fullPage: true
-            })
+            });
+            const policyNumber = await page.locator('[class="formFieldComponent-submissionNumber"]').first().inputValue();
+            const quote = await page.locator('[class="buttonLabel ng-binding"]').nth(2).textContent();
+            const sourceType = await page.locator('[class="buttonLabel ng-binding"]').nth(1).textContent();
+            const createdBy = await page.locator('[class="formFieldComponent-createdBy"]').first().inputValue();
+            const lastModified = await page.locator('[class="calendarInput ng-pristine ng-untouched ng-valid ng-isolate-scope ng-not-empty"]').nth(4).inputValue();
+            const policyQuoteInfo = { 
+                policyNumber: policyNumber,
+                quote: quote,
+                sourceType: sourceType,
+                createdBy: createdBy,
+                lastModified: lastModified
+            };
+            return  policyQuoteInfo;
         } catch (error) {
             console.log('Submit button may still be disabled. Error:', error.message);
             throw error;
@@ -203,9 +286,8 @@ export class Atlas extends BaseClass {
             page = await this.fillLocationClassCodeInfo(page, csvData);
             page = await this.fillPolicyInfo(page, csvData);
             page = await this.fillAcordQuesions(page, csvData);
-            await this.clickSubmitButton(page, csvData);
-
-            // await this.clickSubmitButton(page);
+            const policyQuoteInfo = await this.clickSubmitButton(page, csvData);
+            return policyQuoteInfo;
         } catch (error) {
             await page.screenshot({ path: 'error.png', fullPage: true });
             console.log('Screenshot saved as form_filled.png');
