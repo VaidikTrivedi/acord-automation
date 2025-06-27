@@ -11,3 +11,4 @@ jsconfig.json
 .gitignore
 form_filled.png
 error.png
+*.png

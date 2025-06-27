@@ -267,7 +267,6 @@ export class Atlas extends BaseClass {
     }
   }
 
-
   async runAutomation(csvData) {
     const browser = await chromium.launch({
       headless: false,
@@ -367,4 +366,41 @@ export class Atlas extends BaseClass {
       throw error;
     }
   }
+
+    getAcordQuesionsKey() {
+        return {
+            "OwnOperateLeaseAircraftWatercraft": '[class="formFieldComponent-yesnoAircraftWatercraft yes"]',
+            "ExplainAirWaterCraftUse": '[class="formFieldComponent-yesnoAircraftWatercraft"]',
+            "InvolveWorkWithHazardousProjectsMaterials": '[class="formFieldComponent-yesnoHazardousMaterial yes ng-not-empty"]',
+            "HazardousMaterialsExplanation": '[class="formFieldComponent-yesnoHazardousMaterial"]',
+            "WorkAboveGroundOrUnderground": '[class="formFieldComponent-yesnoUnderground yes ng-not-empty error ng-touched"]',
+            "WorkAboveGroundOrUndergroundDetails": '[class="formFieldComponent-yesnoUnderground"]',
+            "EngagedInOtherBusiness": '[class="formFieldComponent-yesnoAnyOtherTypeOfBusiness yes ng-not-empty"]',
+            "EngagedInOtherBusinessDetails": '[class="formFieldComponent-yesnoAnyOtherTypeOfBusiness"]',
+            "SubcontractAnyWork": '[class="formFieldComponent-yesnoSubcontractors yes ng-not-empty"]',
+            "SubcontractedWorkDetails": '[class="formFieldComponent-yesnoSubcontractors"]',
+            "UninsuredSubcontractorsUsed": '[class="formFieldComponent-yesnoWithoutCertificates yes ng-not-empty error ng-touched"]',
+            "WorkSubletWithoutInsuranceDetails": '[class="formFieldComponent-yesnoWithoutCertificates"]',
+            "ProvideGroupTransportOfMoreThan5Employees": '[class="formFieldComponent-yesnoGroupTransportation yes ng-not-empty error ng-touched"]',
+            "EmployeeTransportDetails": '[class="formFieldComponent-yesnoGroupTransportation"]',
+            "SeasonalEmployees": '[class="formFieldComponent-yesnoSeasonalEmployees yes ng-not-empty ng-touched"]',
+            "SeasonalEmployeesDetails": '[class="formFieldComponent-yesnoSeasonalEmployees"]',
+            "VolunteerLabor": '[class="formFieldComponent-yesnoVolunteerLabor yes ng-not-empty"]',
+            "VolunteerLaborDetails": '[class="formFieldComponent-yesnoVolunteerLabor"]',
+            "PhysicalsRequired": '[class="formFieldComponent-yesnoPhysicalsRequired yes ng-not-empty"]',
+            "PhysicalsRequiredDetails": '[class="formFieldComponent-yesnoPhysicalsRequired"]',
+            "OtherInsuranceWithInsurer": '[class="formFieldComponent-yesnoOtherInsurance yes ng-not-empty"]',
+            "OtherInsuranceWithInsurerDetails": '[class="formFieldComponent-yesnoOtherInsurance"]',
+            "ProvideEmployeeHealthPlans": '[class="formFieldComponent-yesnoEmployeeHealthPlans yes ng-not-empty"]',
+            "EmployeeHealthPlanDetails": '[class="formFieldComponent-yesnoEmployeeHealthPlans"]',
+            "LeaseEmployeesFromOtherEmployers": '[class="formFieldComponent-yesnoLeaseEmployees yes ng-not-empty"]',
+            "EmployeeLeasingDetails": '[class="formFieldComponent-yesnoLeaseEmployees"]',
+            "RemoteEmployeesWorkingAtHome": '[class="formFieldComponent-yesnoWorkAtHome yes ng-not-empty"]',
+            "RemoteWorkDetails": '[class="formFieldComponent-yesnoWorkAtHome"]',
+            "TaxLiensOrBankruptcy": '[class="formFieldComponent-yesnoTaxLiens yes ng-not-empty"]',
+            "TaxLiensOrBankruptcyDetails": '[class="formFieldComponent-yesnoTaxLiens"]',
+            "PriorUnpaidWCPremium": '[class="formFieldComponent-yesnoUndisputedWorkersCompensation yes ng-not-empty"]',
+            "UnpaidWCPremiumDetails": '[class="formFieldComponent-yesnoUndisputedWorkersCompensation"]',
+        }   
+    }
 }
