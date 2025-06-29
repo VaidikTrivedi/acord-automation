@@ -3,22 +3,26 @@ import path from "path";
 import config from "./config.json" with { type: "json" };
 import { Atlas } from "./atlas.js";
 
+const MAX_RETRIES = 3;
+
 async function main() {
     const csvFilePath = path.resolve("./web_automation/acord130_data.csv"); // adjust path as needed
     const csvData = await readCSVtoJSON(csvFilePath);
-    // console.log(csvData);
     const website = "atlas";
     switch (website) {
         case "atlas":
             const url = config.atlas.url;
             const username = config.atlas.username;
             const password = config.atlas.password;
+            for(let retry=1; retry<MAX_RETRIES; retry++) {
             try {
                 const worker = new Atlas(url, username, password);
                 const policySubmissionResult = await worker.runAutomation(csvData);
                 console.log(`Output: - ${JSON.stringify(policySubmissionResult)}`);
+                break;
             } catch (error) {
                 console.error('Error in main function:', error);
+            }
             }
             break;
         default:
@@ -45,6 +49,5 @@ async function readCSVtoJSON(filePath) {
     }
     return csvDict;
 }
-
 
 await main();

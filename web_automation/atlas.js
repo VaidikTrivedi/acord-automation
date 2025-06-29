@@ -2,8 +2,6 @@ import { chromium } from 'playwright';
 import { BaseClass } from './baseClass.js';
 import { convertNumberToDate } from "./helper.js";
 
-// TODO: Checkbox accord questions based on data
-
 export class Atlas extends BaseClass {
   constructor(url, username, password) {
     super(url, username, password)
@@ -232,6 +230,60 @@ export class Atlas extends BaseClass {
     return page;
   }
 
+  getAcordQuesionsKey() {
+    return {
+      "OwnOperateLeaseAircraftWatercraft": '[class="formFieldComponent-yesnoAircraftWatercraft yes"]',
+      "ExplainAirWaterCraftUse": '[class="formFieldComponent-yesnoAircraftWatercraft"]',
+      "InvolveWorkWithHazardousProjectsMaterials": '[class="formFieldComponent-yesnoHazardousMaterial yes ng-not-empty"]',
+      "HazardousMaterialsExplanation": '[class="formFieldComponent-yesnoHazardousMaterial"]',
+      "WorkAboveGroundOrUnderground": '[class="formFieldComponent-yesnoUnderground yes ng-not-empty error ng-touched"]',
+      "WorkAboveGroundOrUndergroundDetails": '[class="formFieldComponent-yesnoUnderground"]',
+      "EngagedInOtherBusiness": '[class="formFieldComponent-yesnoAnyOtherTypeOfBusiness yes ng-not-empty"]',
+      "EngagedInOtherBusinessDetails": '[class="formFieldComponent-yesnoAnyOtherTypeOfBusiness"]',
+      "SubcontractAnyWork": '[class="formFieldComponent-yesnoSubcontractors yes ng-not-empty"]',
+      "SubcontractedWorkDetails": '[class="formFieldComponent-yesnoSubcontractors"]',
+      "UninsuredSubcontractorsUsed": '[class="formFieldComponent-yesnoWithoutCertificates yes ng-not-empty error ng-touched"]',
+      "WorkSubletWithoutInsuranceDetails": '[class="formFieldComponent-yesnoWithoutCertificates"]',
+      "ProvideGroupTransportOfMoreThan5Employees": '[class="formFieldComponent-yesnoGroupTransportation yes ng-not-empty error ng-touched"]',
+      "EmployeeTransportDetails": '[class="formFieldComponent-yesnoGroupTransportation"]',
+      "SeasonalEmployees": '[class="formFieldComponent-yesnoSeasonalEmployees yes ng-not-empty ng-touched"]',
+      "SeasonalEmployeesDetails": '[class="formFieldComponent-yesnoSeasonalEmployees"]',
+      "VolunteerLabor": '[class="formFieldComponent-yesnoVolunteerLabor yes ng-not-empty"]',
+      "VolunteerLaborDetails": '[class="formFieldComponent-yesnoVolunteerLabor"]',
+      "PhysicalsRequired": '[class="formFieldComponent-yesnoPhysicalsRequired yes ng-not-empty"]',
+      "PhysicalsRequiredDetails": '[class="formFieldComponent-yesnoPhysicalsRequired"]',
+      "OtherInsuranceWithInsurer": '[class="formFieldComponent-yesnoOtherInsurance yes ng-not-empty"]',
+      "OtherInsuranceWithInsurerDetails": '[class="formFieldComponent-yesnoOtherInsurance"]',
+      "ProvideEmployeeHealthPlans": '[class="formFieldComponent-yesnoEmployeeHealthPlans yes ng-not-empty"]',
+      "EmployeeHealthPlanDetails": '[class="formFieldComponent-yesnoEmployeeHealthPlans"]',
+      "LeaseEmployeesFromOtherEmployers": '[class="formFieldComponent-yesnoLeaseEmployees yes ng-not-empty"]',
+      "EmployeeLeasingDetails": '[class="formFieldComponent-yesnoLeaseEmployees"]',
+      "RemoteEmployeesWorkingAtHome": '[class="formFieldComponent-yesnoWorkAtHome yes ng-not-empty"]',
+      "RemoteWorkDetails": '[class="formFieldComponent-yesnoWorkAtHome"]',
+      "TaxLiensOrBankruptcy": '[class="formFieldComponent-yesnoTaxLiens yes ng-not-empty"]',
+      "TaxLiensOrBankruptcyDetails": '[class="formFieldComponent-yesnoTaxLiens"]',
+      "PriorUnpaidWCPremium": '[class="formFieldComponent-yesnoUndisputedWorkersCompensation yes ng-not-empty"]',
+      "UnpaidWCPremiumDetails": '[class="formFieldComponent-yesnoUndisputedWorkersCompensation"]',
+    }
+  }
+
+  async fillAcordQuesionsExtended(page, csvData) {
+    console.log("Fill Acord Quesions Extended called");
+    const acordQuesionsDict = this.getAcordQuesionsKey();
+    const acordQuesionsKeys = Object.keys(acordQuesionsDict);
+    for (let i=0; i<acordQuesionsKeys.length; i=i+2) {
+      if(csvData[acordQuesionsKeys[i]] && csvData[acordQuesionsKeys[i]] === "yes") {
+        try{
+          await page.locator(acordQuesionsDict[acordQuesionsKeys[i]]).click();
+          await page.fill(acordQuesionsDict[acordQuesionsKeys[i+1]], csvData[acordQuesionsKeys[i+1]]);
+        } catch (error) {
+          console.error(`Error while answeing - ${acordQuesionsKeys[i]}`);
+        }
+      }
+    }
+    return page;
+  }
+
   async clickSubmitButton(page, csvData) {
     try {
       // Wait for the Submit Application button to be enabled
@@ -285,122 +337,15 @@ export class Atlas extends BaseClass {
       page = await this.fillLocationClassCodeInfo(page, csvData);
       page = await this.fillPolicyInfo(page, csvData);
       page = await this.fillAcordQuesions(page, csvData);
+      page = await this.fillAcordQuesionsExtended(page, csvData);
       const policyQuoteInfo = await this.clickSubmitButton(page, csvData);
       return policyQuoteInfo;
     } catch (error) {
       await page.screenshot({ path: 'error.png', fullPage: true });
-      console.log('Screenshot saved as form_filled.png');
       console.error(error);
+      console.log('Screenshot saved as error.png');
     } finally {
       await browser?.close();
     }
   }
-
-  async clickAllYesRadioButtons(page) {
-    try {
-      // Wait for the page to be fully loaded
-      await page.waitForLoadState('networkidle');
-
-      // Array of all "Yes" radio button selectors found on the page
-      const yesRadioSelectors = [
-        // Question 1: Does applicant own, operate or lease aircraft/watercraft?
-        'input[type="radio"][value="Yes"]',
-
-        // Alternative selectors for more specific targeting
-        'input[type="radio"] + label:has-text("Yes")',
-        'input[type="radio"][aria-label*="Yes"]',
-
-        // XPath selectors for better precision
-        '//input[@type="radio" and following-sibling::text()[contains(., "Yes")]]',
-        '//input[@type="radio" and @value="Yes"]'
-      ];
-
-      // Get all radio buttons that have "Yes" as their value or associated text
-      const yesRadioButtons = await page.locator('input[type="radio"]').all();
-
-      console.log(`Found ${yesRadioButtons.length} total radio buttons on the page`);
-
-      let clickedCount = 0;
-
-      // Iterate through all radio buttons and click those associated with "Yes"
-      for (const radio of yesRadioButtons) {
-        try {
-          // Check if this radio button is associated with "Yes"
-          const value = await radio.getAttribute('value');
-          const nextText = await radio.locator('+ *').textContent().catch(() => '');
-          const parentText = await radio.locator('..').textContent().catch(() => '');
-
-          // Check various ways the "Yes" option might be identified
-          const isYesOption =
-            value === 'Yes' ||
-            value === 'yes' ||
-            nextText.trim() === 'Yes' ||
-            parentText.includes('Yes') ||
-            await radio.getAttribute('aria-label') === 'Yes';
-
-          if (isYesOption) {
-            // Ensure the radio button is visible and enabled
-            await radio.waitFor({ state: 'visible' });
-
-            if (await radio.isEnabled()) {
-              await radio.click();
-              clickedCount++;
-              console.log(`Clicked "Yes" radio button #${clickedCount}`);
-
-              // Small delay to ensure the click is processed
-              await page.waitForTimeout(100);
-            } else {
-              console.log('Found disabled "Yes" radio button, skipping');
-            }
-          }
-        } catch (error) {
-          console.log(`Error processing radio button: ${error.message}`);
-        }
-      }
-
-      console.log(`Successfully clicked ${clickedCount} "Yes" radio buttons`);
-      return clickedCount;
-
-    } catch (error) {
-      console.error('Error clicking Yes radio buttons:', error);
-      throw error;
-    }
-  }
-
-    getAcordQuesionsKey() {
-        return {
-            "OwnOperateLeaseAircraftWatercraft": '[class="formFieldComponent-yesnoAircraftWatercraft yes"]',
-            "ExplainAirWaterCraftUse": '[class="formFieldComponent-yesnoAircraftWatercraft"]',
-            "InvolveWorkWithHazardousProjectsMaterials": '[class="formFieldComponent-yesnoHazardousMaterial yes ng-not-empty"]',
-            "HazardousMaterialsExplanation": '[class="formFieldComponent-yesnoHazardousMaterial"]',
-            "WorkAboveGroundOrUnderground": '[class="formFieldComponent-yesnoUnderground yes ng-not-empty error ng-touched"]',
-            "WorkAboveGroundOrUndergroundDetails": '[class="formFieldComponent-yesnoUnderground"]',
-            "EngagedInOtherBusiness": '[class="formFieldComponent-yesnoAnyOtherTypeOfBusiness yes ng-not-empty"]',
-            "EngagedInOtherBusinessDetails": '[class="formFieldComponent-yesnoAnyOtherTypeOfBusiness"]',
-            "SubcontractAnyWork": '[class="formFieldComponent-yesnoSubcontractors yes ng-not-empty"]',
-            "SubcontractedWorkDetails": '[class="formFieldComponent-yesnoSubcontractors"]',
-            "UninsuredSubcontractorsUsed": '[class="formFieldComponent-yesnoWithoutCertificates yes ng-not-empty error ng-touched"]',
-            "WorkSubletWithoutInsuranceDetails": '[class="formFieldComponent-yesnoWithoutCertificates"]',
-            "ProvideGroupTransportOfMoreThan5Employees": '[class="formFieldComponent-yesnoGroupTransportation yes ng-not-empty error ng-touched"]',
-            "EmployeeTransportDetails": '[class="formFieldComponent-yesnoGroupTransportation"]',
-            "SeasonalEmployees": '[class="formFieldComponent-yesnoSeasonalEmployees yes ng-not-empty ng-touched"]',
-            "SeasonalEmployeesDetails": '[class="formFieldComponent-yesnoSeasonalEmployees"]',
-            "VolunteerLabor": '[class="formFieldComponent-yesnoVolunteerLabor yes ng-not-empty"]',
-            "VolunteerLaborDetails": '[class="formFieldComponent-yesnoVolunteerLabor"]',
-            "PhysicalsRequired": '[class="formFieldComponent-yesnoPhysicalsRequired yes ng-not-empty"]',
-            "PhysicalsRequiredDetails": '[class="formFieldComponent-yesnoPhysicalsRequired"]',
-            "OtherInsuranceWithInsurer": '[class="formFieldComponent-yesnoOtherInsurance yes ng-not-empty"]',
-            "OtherInsuranceWithInsurerDetails": '[class="formFieldComponent-yesnoOtherInsurance"]',
-            "ProvideEmployeeHealthPlans": '[class="formFieldComponent-yesnoEmployeeHealthPlans yes ng-not-empty"]',
-            "EmployeeHealthPlanDetails": '[class="formFieldComponent-yesnoEmployeeHealthPlans"]',
-            "LeaseEmployeesFromOtherEmployers": '[class="formFieldComponent-yesnoLeaseEmployees yes ng-not-empty"]',
-            "EmployeeLeasingDetails": '[class="formFieldComponent-yesnoLeaseEmployees"]',
-            "RemoteEmployeesWorkingAtHome": '[class="formFieldComponent-yesnoWorkAtHome yes ng-not-empty"]',
-            "RemoteWorkDetails": '[class="formFieldComponent-yesnoWorkAtHome"]',
-            "TaxLiensOrBankruptcy": '[class="formFieldComponent-yesnoTaxLiens yes ng-not-empty"]',
-            "TaxLiensOrBankruptcyDetails": '[class="formFieldComponent-yesnoTaxLiens"]',
-            "PriorUnpaidWCPremium": '[class="formFieldComponent-yesnoUndisputedWorkersCompensation yes ng-not-empty"]',
-            "UnpaidWCPremiumDetails": '[class="formFieldComponent-yesnoUndisputedWorkersCompensation"]',
-        }   
-    }
 }
