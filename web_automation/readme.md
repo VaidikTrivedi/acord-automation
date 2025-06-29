@@ -1,2 +1,3 @@
-npm install
-npx playwright install 
+## Node Library Prerequisite
+- npm install
+- npx playwright install 
