@@ -15,14 +15,14 @@ async function main() {
             const username = config.atlas.username;
             const password = config.atlas.password;
             for(let retry=1; retry<MAX_RETRIES; retry++) {
-            try {
-                const worker = new Atlas(url, username, password);
-                const policySubmissionResult = await worker.runAutomation(csvData);
-                console.log(`Output: - ${JSON.stringify(policySubmissionResult)}`);
-                break;
-            } catch (error) {
-                console.error('Error in main function:', error);
-            }
+                try {
+                    const worker = new Atlas(url, username, password);
+                    const policySubmissionResult = await worker.runAutomation(csvData);
+                    console.log(`Output: - ${JSON.stringify(policySubmissionResult)}`);
+                    break;
+                } catch (error) {
+                    console.error('Error in main function:', error);
+                }
             }
             break;
         default:
